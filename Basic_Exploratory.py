@@ -29,13 +29,13 @@ def cut_levels_new(x, threshold, new_value):
     x[np.in1d(x, labels)] = new_value
     return x, labels
 
-def find_outliers(Data, col)
+def find_outliers(Data, col):
     data_mean, data_std = np.mean(Data[col]), np.std(Data[col])
     cut_off = data_std * 4
     lower, upper = data_mean - cut_off, data_mean + cut_off
     return Data.loc[(Data[col]<lower) | (Data[col]>upper), col ] #.index
 
-def basic_eda(df):
+def basic_eda(df, max = 10):
     print("----------HEAD--------")
     display(df.head(5));
     print("----------INFO-----------------")
@@ -55,12 +55,11 @@ def basic_eda(df):
     print("-----Sample-------------")
     display(df.sample(5))
     print("******  Counts  ******* \n")
-    for c in df.columns[:(min(df.columns.shape[0],10))]:
+    for c in df.columns[:(min(df.columns.shape[0],max))]:
         print("---- %s ---" % c)
         display(df[c].value_counts().to_frame())
-#     display(df.apply(lambda x: x.value_counts() , axis = 0).T.stack().to_frame() )
 
-def Look_Date(data):
+def look_date(data):
     print("The data starts from the date {} and ends in {}".format(data.min().date(),data.max().date()))
     print("So we have {} of data".format(data.max().date()-data.min().date()))
 
